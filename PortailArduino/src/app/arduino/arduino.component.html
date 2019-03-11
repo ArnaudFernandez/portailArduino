@@ -1,0 +1,37 @@
+<div *ngFor="let obj of tabArduino">
+  <mat-card class="cardContainer">
+    <mat-card-header>
+      <i mat-card-avatar class="material-icons">
+        dns
+      </i>
+      <mat-card-title>Salle : {{obj.salle}}</mat-card-title>
+      <mat-card-subtitle>{{obj.mac}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-divider></mat-divider>
+
+      <div class="jumpABit"></div>
+
+      <div class="temperature">
+        <table>
+          <tr>
+            <td>
+              <div class="titleInCard">Température actuelle</div> <br/>
+              <div *ngIf="isTempFine(obj)" class="isFine">{{obj.temperature}}</div>
+              <div *ngIf="!isTempFine(obj)" class="notFine">{{obj.temperature}}</div>
+            </td>
+            <td>
+              <div class="titleInCard">Température minimale voulu</div> <br/>
+              {{obj.expectedMinTemp}}
+            </td>
+            <td>
+              <div class="titleInCard">Température maximale voulu</div> <br/>
+              {{obj.expectedMaxTemp}}
+            </td>
+          </tr>
+        </table>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+</div>

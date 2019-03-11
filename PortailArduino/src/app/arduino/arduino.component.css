@@ -1,0 +1,33 @@
+.cardContainer {
+    width : 95%;
+    margin: auto;
+    margin-top: 20px;
+    background-color: #f5f5f5;
+}
+
+.temperature {
+    text-align: center;
+}
+
+.titleInCard {
+    font-weight : bold;
+    font-size: 1.2em;
+}
+
+.jumpABit {
+    height : 15px;
+}
+
+table {
+    width : 100%;
+}
+
+.notFine {
+    color : red;
+    font-weight: bold;
+}
+
+.isFine {
+    color : green;
+    font-weight: bold;
+}
