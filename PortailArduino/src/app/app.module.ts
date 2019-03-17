@@ -9,6 +9,8 @@ import { ArduinoComponent } from './arduino/arduino.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatDividerModule} from '@angular/material/divider';
 
+import { HttpClientModule } from '@angular/common/http';
+
 
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
@@ -24,7 +26,8 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
       NoopAnimationsModule,
     AppRoutingModule,
       MatCardModule,
-      MatDividerModule
+      MatDividerModule,
+      HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-arduino',
@@ -7,31 +8,44 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ArduinoComponent implements OnInit {
 
+  static COUNT_LINES_URL : string = "http://localhost:8081/api/countAllLines";
+  static GET_LAST_UPDATE : string = "http://localhost:8081/api/getLastUpdate";
+  static TEST_CONNECTION_URL : string = "http://localhost:8081/api/connection";
+
   tabObj : String[];
   tabArduino : ArduinoClass[];
+  lignesInDB : string;
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
 
       this.tabObj = [];
       this.tabArduino = [];
 
-      // Temporary object
-      this.tabObj.push("{\"mac\" : \"00:1B:44:11:3A:B7\", \"temperature\" : \"25.3\", \"expectedMaxTemp\" : \"24\", \"expectedMinTemp\" : \"19\" ,\"salle\" : \"C3\"}");
-      this.tabObj.push("{\"mac\" : \"00:1B:44:11:3A:B7\", \"temperature\" : \"22\", \"expectedMaxTemp\" : \"24\", \"expectedMinTemp\" : \"19\" ,\"salle\" : \"C3\"}");
+      this.http.get(ArduinoComponent.GET_LAST_UPDATE).subscribe((data : any) => {
 
-      this.populateTabArduino();
+          for(let i = 0; i < data.length; i++){
+              this.tabObj.push(data[i]);
+          }
+          console.log(this.tabObj);
+          this.populateTabArduino();
+      });
+
+
+
+      this.lignesInDB = '0';
+      this.http.get(ArduinoComponent.COUNT_LINES_URL).subscribe((data : any) => this.lignesInDB = data.data);
+
   }
 
   private populateTabArduino(){
-      let i : int = 0;
+      let i : number = 0;
 
       for(i; i < this.tabObj.length; i++){
 
-          let jsObj : JSON = JSON.parse(this.tabObj[i]);
-
-          this.tabArduino.push(new ArduinoClass(jsObj.mac, jsObj.temperature, jsObj.salle, jsObj.expectedMaxTemp, jsObj.expectedMinTemp));
+          // @ts-ignore
+          this.tabArduino.push(new ArduinoClass(this.tabObj[i].mac, this.tabObj[i].temperature, this.tabObj[i].salle, this.tabObj[i].max, this.tabObj[i].min));
       }
   }
 
