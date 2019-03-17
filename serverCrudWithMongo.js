@@ -58,11 +58,7 @@ app.get('/MyTableVue', function(req, res) {
 // Ces routes forment l'API de l'application !!
 //----------------------------------------------
 
-// Test de la connexion à la base
 app.get('/api/connection', function(req, res) {
-	// Pour le moment on simule, mais après on devra
-	// réellement se connecte à la base de données
-	// et renvoyer une valeur pour dire si tout est ok
 	mongoDBModule.connexionMongo(function(err, db) {
 		let reponse;
 
@@ -96,12 +92,6 @@ app.get('/api/countAllLines', function(req, res) {
 	});
 });
 
-// On va récupérer des restaurants par un GET (standard REST) 
-// cette fonction d'API peut accepter des paramètres
-// pagesize = nombre de restaurants par page
-// page = no de la page
-// Oui, on va faire de la pagination, pour afficher
-// par exemple les restaurants 10 par 10
 app.get('/api/getLastUpdate', function(req, res) {
 
 	let name = req.query.name || '';
@@ -127,7 +117,6 @@ app.get('/api/getLastUpdate', function(req, res) {
 			for (let j = 0; j < macAddressAlreadyIn.length; j++) {
 				if (infoFromOne.mac === macAddressAlreadyIn[j]) {
 					isAlreadyIn = true;
-					console.log("ALREADY IN")
 				}
 			}
 
@@ -148,49 +137,4 @@ app.get('/api/getLastUpdate', function(req, res) {
 		res.send(arrayToBeSend);
 	});
 });
-
-// Récupération d'un seul restaurant par son id
-app.get('/api/restaurants/:id', function(req, res) {
-	var id = req.params.id;
-
-	mongoDBModule.findRestaurantById(id, function(data) {
-		res.send(JSON.stringify(data));
-	});
-
-});
-
-// Creation d'un restaurant par envoi d'un formulaire
-// On fera l'insert par un POST, c'est le standard REST
-app.post('/api/restaurants', multerData.fields([]), function(req, res) {
-	// On supposera qu'on ajoutera un restaurant en 
-	// donnant son nom et sa cuisine. On va donc 
-	// recuperer les données du formulaire d'envoi
-	// les params sont dans req.body même si le formulaire
-	// est envoyé en multipart
-
-	mongoDBModule.createRestaurant(req.body, function(data) {
-		res.send(JSON.stringify(data));
-	});
-});
-
-// Modification d'un restaurant, on fera l'update par
-// une requête http PUT, c'est le standard REST
-app.put('/api/restaurants/:id', multerData.fields([]), function(req, res) {
-	var id = req.params.id;
-
-	mongoDBModule.updateRestaurant(id, req.body, function(data) {
-		res.send(JSON.stringify(data));
-	});
-});
-
-// Suppression d'un restaurant
-// On fera la suppression par une requête http DELETE
-// c'est le standard REST
-app.delete('/api/restaurants/:id', function(req, res) {
-	var id = req.params.id;
-
-	mongoDBModule.deleteRestaurant(id, function(data) {
-		res.send(JSON.stringify(data));
-	});
-})
 
