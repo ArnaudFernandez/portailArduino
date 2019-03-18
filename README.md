@@ -3,10 +3,10 @@
 ## Pour commencer ##
 
 LISEZ-CECI S'IL VOUS PLAIT ! Merci, si vous êtes là c'est que vous lisez. Merci de nous contacter si vous avez n'importe quel problème
-sur l'installation de notre projet. Je sais que vous n'avez pas que ça a faire, mais on aimerai vraiment que vous 
+sur l'installation de notre projet. Je sais que vous n'avez pas que ça a faire, mais on aimerait vraiment que vous 
 voyez le fruit de nos travaux, et même si l'installation est fastidieuse, nous pensons que notre système vaut le détour !
 
-En cas de problème contactez nous sur
+En cas de problème, contactez nous sur
 > arnaud.fernandez1@gmail.com
 
 > anais.khorn@gmail.com
@@ -17,31 +17,36 @@ Merci de votre compréhension !
 
 ### Qu'est ce qu'il fait alors ce projet ? ###
 
-L'idée de ce projet et d'interconnecter un ensemble d'objets conntectés afin de récupérer à plusieurs endroits des températures 
+L'idée de ce projet est d'interconnecter un ensemble d'objets connectés afin de récupérer à plusieurs endroits des températures 
 et de pouvoir visualiser l'ensemble de leur état sur un tableau de bord.
 
 Voici ci-dessous un schéma explicatif de notre architecture :
 
 ![](https://i1.wp.com/www.internetoflego.com/wp-content/uploads/2015/12/mqtt-nodered-topology.png)
 
-Notre objet connecté (un Arduino pour le projet) récupère à intervalles régulier la température grâce à un thermomètre.
-Une fois la valeur récupérée, il va alors la publiée dans un topic à destination du broker. Un serveur node (ici node-red)
+Notre objet connecté (un Arduino pour le projet) récupère à intervalle régulier la température grâce à un thermomètre.
+Une fois la valeur récupérée, il va alors la publier dans un topic à destination du broker. Un serveur node (ici node-red)
 subscribe alors aux topics et ajoute un document dans une base mongoDB
 
 #### Quoi ? On stock dans une base de données ? ####
 
 Oui. Notre projet est passé par plusieurs états, broker public, puis privé, subscribe du front au broker direct, et autres.
-Après réflexions, nous voulions pouvoir garder une trace des différentes températures relevés par les objets conntectés.
+Après réflexion, nous voulions pouvoir garder une trace des différentes températures relevées par les objets connectés.
 C'est pourquoi nous avons opté pour un stockage de ces valeurs dans une base de données, mais on va y revenir, ne vous
 inquiétez pas !
 
 ### Prérequis ###
 
 • Node-RED
+
 • MongoDB
+
 • Mosca
+
 • Angular (6+)
+
 • NodeJS
+
 
 ### Installation ###
 
@@ -66,7 +71,7 @@ Pour installer Node-RED, tapez dans une console la commande suivante:
 
     sudo npm install -g --unsafe-perm node-red
 
-> Euh sudo Arnaud & Anaïs ? Mais je suis sur windows ...
+> Euh sudo Arnaud & Anaïs ? Mais je suis sur Windows ...
 
 Pas de panique, vous pouvez lancer votre console en administrateur ou utiliser powershell en tapant la commande 
 
@@ -77,7 +82,7 @@ Et resaissez la commande précédente ;)
 ---------------------------
 
 
-Pour lancer node red, rien de plus facile, saissisez la commande
+Pour lancer Node-RED, rien de plus facile, saissisez la commande
 
     node-red
     
@@ -85,8 +90,8 @@ Tadaa, ça devrait se lancer ! Ensuite, saisissez dans votre navigateur favori :
 
     http://localhost:1880
     
-Vous devriez arriver sur la page d'administration de node red. Oui, c'est une jolie interface graphique toute bien
-afin de pouvoir créé rapidement et efficacement notre système, mais on y reviendra plus tard. Laissez tout ça dans un coin 
+Vous devriez arriver sur la page d'administration de Node-RED. Oui, c'est une jolie interface graphique,
+afin de pouvoir créer rapidement et efficacement notre système, mais on y reviendra plus tard. Laissez tout ça dans un coin 
 et passons à la suite !
 
 #### 3) MongoDB ####
@@ -138,7 +143,7 @@ Il devrait alors s'installer comme un grand ... et voilà !
 
 ### Bon alors ! Je veux prendre la température moi, comment ça marche tout ça ! ##
 
-Ca arrive ! Dans un premier temps, ouvrez une console et naviguez jusqu'à la racine du projet, ensuite saisissez 
+Ça arrive ! Dans un premier temps, ouvrez une console et naviguez jusqu'à la racine du projet, ensuite saisissez 
 
     npm install
     
@@ -151,7 +156,7 @@ nous servir pour plus tard !
 ### Arduino ###
 
 Vous trouverez à la racine du projet un dossier mqtt-full, qui contient un fichier mqtt-full.ino.
-Ouvrez le. Vous allez devoir changer quelques lignes pour que cela marche chez vous !
+Ouvrez-le. Vous allez devoir changer quelques lignes pour que cela marche chez vous !
 
 > Ligne 19 : Modifiez "L'IP_LOCAL_DE_VOTRE_PC_ICI" par votre IP locale,
 cela peut être facilement fait en ouvrant une console et en tapant la commande ipconfig /all
@@ -187,8 +192,8 @@ Ensuite avec
     
 > client.setCallback(mqtt_pubcallback); 
 
-On indique sur quel serveur il doit aller chercher ses topics, ici c'est notre IP locale sur le port 1883.
-Comme nous n'avons pas encore exécuter notre serveur Node, il ne va pas encore marcher, mais ça va venir !
+On indique sur quel serveur il doit aller chercher ses topics, ici c'est notre IP local sur le port 1883.
+Comme nous n'avons pas encore exécuté notre serveur Node, il ne va pas encore marcher, mais ça va venir !
 
 Le reste du setup concerne l'initialisation de la Led et du photorésistor, on connait.
 
@@ -207,16 +212,16 @@ une valeur pour le sensor afin de changer le seuil d'activation de la lumière e
 
 ### MongoDB ###
 
-Vous aurez besoin d'avoir mongoDB qui tourne sur votre ordinateur pour que tout fonctionne correctement.
+Vous aurez besoin d'avoir mongoDB (serveur) qui tourne sur votre ordinateur pour que tout fonctionne correctement.
 Ouvrez une console et tapez 
 
-    mongodb
+    mongod
     
 Il devrait se lancer tout seul comme un grand !
 
 ### Node-RED ###
 
-Si vous suivez bien tout depuis le début, vous devriez avoir node-red d'ouvert ainsi. Si ce n'est pas le cas, voici les étapes
+Si vous suivez bien tout depuis le début, vous devriez avoir Node-RED d'ouvert ainsi. Si ce n'est pas le cas, voici les étapes
 pour l'exécuter :
  Ouvrez une console et tapez
  
@@ -226,7 +231,7 @@ Ensuite ouvrez votre navigateur et tapez dans l'URL :
 
     localhost:1880
     
-Vous devriez arriver sur l'interface de node-red !
+Vous devriez arriver sur l'interface de Node-RED !
 
 ----------------------------
 
@@ -239,11 +244,11 @@ Ensuite, dans l'onglet installation, saisissez dans la barre de recherche
 
 > node-red-contrib-mqtt-broker
 
-Et installer le. Faite la même chose pour 
+Et installez-le. Faites la même chose pour 
 
 > node-red-node-mongodb
 
-Vous pourrez alors importer notre système en réouvrant le menu de tout à l'heure en haut à droite, et en selectionant : 
+Vous pourrez alors importer notre système en réouvrant le menu de tout à l'heure en haut à droite, et en selectionnant : 
 "import" > "clipboard", et en collant ceci 
 
     [{"id":"5ff3278b.7486a8","type":"mqtt in","z":"d4c741b9.12e4","name":"","topic":"miage/m1/sensors/temperature","qos":"2","broker":"4353a68e.92d358","x":135,"y":97,"wires":[["25e5d13f.47306e","ae4b645d.682c28","9274ff6.2d0c2"]]},{"id":"4353a68e.92d358","type":"mqtt-broker","z":"","name":"Broker","broker":"192.168.1.111","port":"1883","clientid":"","usetls":false,"compatmode":true,"keepalive":"60","cleansession":true,"birthTopic":"","birthQos":"0","birthPayload":"","closeTopic":"","closeQos":"0","closePayload":"","willTopic":"","willQos":"0","willPayload":""}]
@@ -253,7 +258,7 @@ Vous devriez alors avoir ceci
 ![](https://puu.sh/D1oA1/7fabae3bc5.png)
 
 C'est le cas ? Super ! Pour faire marcher les topics, vous allez devoir changer l'ip du serveur sur lequel est le broker.
-Pour cela, double cliquez sur un topic (Exemple : miage/mi/sensors/temperature), et éditez le en appuyant sur ce bouton comme
+Pour cela, double-cliquez sur un topic (Exemple : miage/mi/sensors/temperature), et éditez-le en appuyant sur ce bouton comme
 sur la photo ci-dessous
 
 ![](https://puu.sh/D1oCB/4fbb23bd9b.png)
@@ -278,7 +283,7 @@ ouvrir deux consoles et exécuter deux serveurs
 
 #### Angular #### 
 
-Pour exécuter le serveur angular de développement, naviguez jusque dans le dossier "PortailArduino" du projet 
+Pour exécuter le serveur Angular de développement, naviguez jusque dans le dossier "PortailArduino" du projet 
 dans votre console
 
 Si vous ne l'avez pas fait au tout début de la partie "Utilisation", n'oubliez pas de saisir la commande
@@ -287,7 +292,7 @@ Si vous ne l'avez pas fait au tout début de la partie "Utilisation", n'oubliez 
     
 Cela devrait résoudre toutes les dépendances du projet.
 
-Si tout s'est bien passé, vous pourrez alors exécuter angular, saississez alors la commande 
+Si tout s'est bien passé, vous pourrez alors exécuter Angular, saississez alors la commande 
 
     ng serve --open
     
@@ -296,8 +301,8 @@ il faut maintenant exécuter le serveur Node capable de gérer les requêtes.
 
 ### Node pour le portail ###
 
-Pour cela, ouvrez une console (cela devrait normalent vous faire 4 console, la première étant pour mongodb, 
-la seconde pour node-red, la 3e pour Angular, et la 4e pour maintenant !) naviguez jusqu'à la racine du projet, et 
+Pour cela, ouvrez une console (cela devrait normalent vous faire 4 consoles, la première étant pour MongoDB, 
+la seconde pour Node-RED, la 3e pour Angular, et la 4e pour maintenant !) naviguez jusqu'à la racine du projet, et 
 tapez la commande 
 
     node .\serverCrudWithMongo.js
@@ -308,12 +313,12 @@ Si tout ce passe bien, vous devriez avoir un petit message : Serveur lancé sur 
 
 ## Tout est prêt ! ##
 
-Si tout est lancé sans erreur et que l'arduino est bien alimenté et connecté au réseau, vous devriez commencer à voir quelque chose 
+Si tout est lancé sans erreur et que l'Arduino est bien alimenté et connecté au réseau, vous devriez commencer à voir quelque chose 
 comme ça dans le portail 
 
 ![](https://puu.sh/D1uJc/dff2fff699.png)
 
-Le serveur Node requête la base Mongo en prenant le dernier document concernant un appareil donné et affiche son status.
+Le serveur Node requête la base Mongo en prenant le dernier document concernant un appareil donné et affiche son statut.
 Dans le code Arduino, nous avons set une température minimale & une température maximale, si la température est dans la fourchette,
 alors la température s'affichera en vert, si elle ne l'est pas, alors elle s'affichera en rouge.
 
@@ -323,19 +328,19 @@ lui assigner une salle, ici pour le test nous avons mis C3, mais cela pourrait �
 ### Axes d'amélioration ### 
 
 Nous avons développé beaucoup de choses pour au final avoir peu d'actions possibles, mais tout est prêt pour pouvoir 
-améliorer le système. Nous avons beaucoup d'idées pour ça
+améliorer le système. Nous avons beaucoup d'idées pour ça:
 
-1) node-red est configuré pour pouvoir envoyer une valeur à l'Arduino et changer la valeur de déclanchement de la lumière du
+1) Node-RED est configuré pour pouvoir envoyer une valeur à l'Arduino et changer la valeur de déclenchement de la lumière du
 photorésistor, on pourrait alors imaginer pouvoir modifier cette valeur sur le portail. On pourrait également imaginer
 afficher l'état du photorésistor dans le portail afin de voir si la lumière est allumée dans la salle, dans le cas ou
 une personne aurait oublié d'éteindre la lumière
 
-2) On pourrait pouvoir changer directement les seuls de températures maximum et minimum sur le portail
+2) On pourrait pouvoir changer directement les seuils de températures maximum et minimum sur le portail
 
 3) On pourrait pouvoir changer la salle dans laquel l'appareil est placé directement sur le portail & non dans le code
 
 4) On pourrait afficher une évolution de la température de chaque Arduino grâce à la base de données qui garde tout en mémoire
-c'est là ou réside la force d'avoir une architecture système qui stock les données
+c'est là ou réside la force d'avoir une architecture système qui stocke les données
 
 5) On pourrait trier sur le portail pour n'afficher que les appareils hors de la fourchette de température (dans l'idée 
 d'agir rapidement sur un problème de température dans les salles)
@@ -345,7 +350,7 @@ d'agir rapidement sur un problème de température dans les salles)
 
 • **Anaïs Khorn** / anais.khorn@gmail.com
 
-##Webographie
+## Webographie ##
 
 • [http://www.steves-internet-guide.com/install-mosca-mqtt-broker-node-red/](http://www.steves-internet-guide.com/install-mosca-mqtt-broker-node-red/)
 
