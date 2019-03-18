@@ -77,7 +77,7 @@ Pas de panique, vous pouvez lancer votre console en administrateur ou utiliser p
 
     powershell
     
-Et resaissez la commande précédente ;) 
+Et ressaisissez la commande précédente ;) 
 
 ---------------------------
 
@@ -97,7 +97,7 @@ et passons à la suite !
 #### 3) MongoDB ####
 
 Avant de pouvoir commencer l'installation, veuillez télécharger la dernière version de MongoDB. 
-Pour se faire, veuillez vous rendre à l'adresse suivante :
+Pour ce faire, veuillez vous rendre à l'adresse suivante :
  [https://www.mongodb.com/download-center/community](https://www.mongodb.com/download-center/community) 
 
 ##### Installation de MongoDB #####
